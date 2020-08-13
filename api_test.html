@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+	<title>HEATR API Test</title>
+	<meta charset="utf-8"/>
+	<script>
+		function getData() {
+			// Make instance of request object for HTTP request
+			var request = new XMLHttpRequest();
+			console.log("Request object created");
+ 
+			
+			// Set the URL for the AJAX request to be the JSON file
+			request.open("GET", "https://us-central1-heatr-firebaseproject.cloudfunctions.net/odds?game=nfl", true);
+			console.log("Opened request file");
+ 
+			
+			// Set up event handler/callback
+			request.onreadystatechange = function() {
+				console.log("Readystatechange event fired.");
+ 
+				if (request.readyState == 4 && request.status == 200) {
+
+					// Wait for done and success
+					var result = request.responseText;
+					alert(result)
+					var data = JSON.parse(result);
+					
+					// Creating data to display
+					//let string = "";
+
+					alert(data.length)
+
+					for (i = 0; i < data.length; i++) {
+						/*
+						num = parseInt(i) + 1;
+						string += "<strong>" + "Recipe " + num + "</strong>" + "<br />";
+						string += recipes.results[i].title + "<br />";
+						string += "Ready in: " + recipes.results[i].readyInMinutes + " minutes" + "<br />";
+						string += "Servings: " + recipes.results[i].servings + " people" + "<br /> <br />";
+						*/
+					}
+					//document.getElementById("here").innerHTML = string;
+				}
+				else if (request.readyState == 4 && request.status != 200) {
+					document.getElementById("here").innerHTML = "Something is wrong!  Check the logs to see where this went off the rails";
+				}
+				else if (request.readyState == 3) {
+					document.getElementById("here").innerHTML = "Too soon!  Try again";
+				}
+			}
+		
+			// Fire off the HTTP request
+			request.send();
+			console.log("Request sent");
+		}
+	</script>
+</head>
+
+<body onload="getData()" style="background-color: #033454; color: #FFF;">
+
+	<h1 style="text-align: center;">HEATR API Test</h1>
+	<div id="here" style="font-size: 20px;">Loading...</div>
+</body>
+
+</html>
